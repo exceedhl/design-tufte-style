@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Small, Big Data</title>
+  <meta name="author" content="Huang Liang">
+  <meta name="description" content=" Blog Archives About Me A little something about me. Recent Posts Google+ ">
+  
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="canonical" href="http://exceedhl.github.io">
+  <link href="/favicon.png" rel="icon">
+  <link href="screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Small, Big Data" type="application/atom+xml">
+
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+  <header>
+    <ul class="navigation">
+      <li><a href="/">HOME</a></li>
+      <li><a href="archives.html">ARCHIVES</a></li>
+    </ul>
+  </header>
+
+    <h1>Small, Big Data</h1>
+    <aside>April 26, 2013</aside>
+  
+  <blockquote>
+    <q>Any sufficiently advanced technology is indistinguishable from magic.</q>
+    –Arthur C. Clarke
+  </blockquote>
+
+
+  <p>In the past I have <a href="../d3/workshop/">presented</a> <a href="../join/">simplified</a> <a href="http://mbostock.github.io/d3/tutorial/circle.html">descriptions</a> of <a href="http://d3js.org">D3</a>’s selections, providing only enough detail to get started. This article takes a more comprehensive approach; rather than saying how to <i>use</i> <a href="https://github.com/mbostock/d3/wiki/Selections">selections</a>, I will explain how selections are <i>implemented</i>. This may take longer to read, but it should dispel any magic and help you master data-driven documents.
+    
+  <p>The structure of this article may at first seem arbitrary. It describes the internal workings of selections rather than the design motivations, so you may wonder why such mechanisms are needed. This is simply because it is easier to lay all the pieces out first before explaining how everything works in tandem. By the time you read to the end, the intent of the design as well as its function should be clear.
+    
+  <p>D3 is a visualization library, so this article incorporates visual explanations to accompany the text. In subsequent diagrams, the left side of the diagram will show the structure of selections, while the right side will show the structure of data:
+
+    <pre><code>var array = [42];</code></pre>
+
+    <p>Wherever possible, the code that generates the given selection appears immediately above the diagram. Opening your browser’s JavaScript console and creating selections interactively is a great way to test your understanding of the text!
+      
+    <p>Let’s begin.</p>
+      
+    <h2><a href="#subclass" name="subclass">#</a>A Subclass of Array</h2>
+    
+    <aside>JavaScript doesn’t yet support array subclasses directly, so arrays are subclassed through <a href="http://perfectionkills.com/how-ecmascript-5-still-does-not-allow-to-subclass-an-array/">prototype chain injection</a>.</aside>
+    
+  <p>You were probably told that selections are arrays of DOM
+  elements. False. For one, selections are a <i>subclass</i> of array;
+  this subclass provides methods to manipulate selected elements, such
+  as
+  setting <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-attr">attributes</a>
+  and <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-style">styles</a>. Selections
+  inherit native array methods as well, such
+  as <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/forEach">array.forEach</a>
+  and <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/forEach">array.map</a>. However,
+  you won’t often use native methods as D3 provides convenient
+  alternatives, such
+  as <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-each">selection.each</a>. (A
+  few native methods are overridden to adapt their behavior to
+  selections,
+  namely <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-filter">selection.filter</a>
+  and <a href="https://github.com/mbostock/d3/wiki/Selections#wiki-sort">selection.sort</a>.)
+
+<p>If you found this article informative, if you found parts unclear or confusing, or if you have followup questions or feedback, please let me know via <a href="https://twitter.com/mbostock">Twitter</a> or <a href="https://news.ycombinator.com/item?id=5614421">Hacker News</a>. To continue learning about selections, <a href="https://github.com/mbostock/d3/tree/master/src/selection/">reading D3’s source</a> is a rigorous way to test your understanding. And here are several excellent talks and tutorials by others:
+
+<ul>
+  <li><a href="http://alignedleft.com/tutorials/d3/binding-data/">Binding Data</a> by Scott Murray
+  <li><a href="http://www.rvl.io/annaps/d3-journey-to-the-source/">Journey to the Source</a> by Anna Powell-Smith
+  <li><a href="http://macwright.org/presentations/dcjq/">A Fun, Difficult Introduction to D3</a> by Tom MacWright
+</ul>
+  
+</body>
+
+</html>
